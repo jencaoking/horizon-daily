@@ -44,6 +44,14 @@ jobs:
       - name: Set current date as environment variable
         run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
+      - name: Copy to daily folder
+        run: |
+          mkdir -p "Horizon-日报/$DATE"
+          cp -r docs/* "Horizon-日报/$DATE/"
+          echo "# Horizon 日报 - $DATE" > "Horizon-日报/$DATE/README.md"
+          echo "" >> "Horizon-日报/$DATE/README.md"
+          echo "生成时间: $(date +'%Y-%m-%d %H:%M:%S')" >> "Horizon-日报/$DATE/README.md"
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -53,3 +61,11 @@ jobs:
           commit_message: "📝 Daily Summary: ${{ env.DATE }}"
           publish_branch: gh-pages
           enable_jekyll: true
+
+      - name: Commit daily folder
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add "Horizon-日报/"
+          git diff --staged --quiet || git commit -m "📝 Update daily folder: ${{ env.DATE }}"
+          git push
