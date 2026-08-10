@@ -29,6 +29,10 @@
       "finance-news": {
         "threshold": 7.0,
         "topic_dedup": true
+      },
+      "ai-creator": {
+        "threshold": 5.0,
+        "topic_dedup": true
       }
     }
   },
@@ -159,7 +163,8 @@
     "profile_order": [
       "tech-news",
       "tech-blog",
-      "finance-news"
+      "finance-news",
+      "ai-creator"
     ],
     "category_groups": {},
     "default_group": "other",
